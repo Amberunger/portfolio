@@ -1,0 +1,119 @@
+/* Importing Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+    font-family: 'Press Start 2P', sans-serif;
+    background: #0a2a34;
+    color: #f0f0f0; /* Lighter text color for better readability */
+    margin: 0;
+    padding: 0;
+    background-image: url('https://images.unsplash.com/photo-1599681994742-b5b57e6e09c1');
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+header {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #f0f0f0; /* Lighter text color */
+    padding: 2em 0;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+header h1 {
+    font-size: 2.5em;
+    color: #9b59b6; /* Violet color */
+    text-shadow: 0 0 2px #9b59b6, 0 0 4px #9b59b6, 0 0 8px #9b59b6, 0 0 12px #9b59b6; /* Adjusted text shadow */
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 20px;
+}
+
+header nav ul li a {
+    color: #f0f0f0; /* Lighter text color */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2em;
+    transition: color 0.3s;
+}
+
+header nav ul li a:hover {
+    color: #9b59b6; /* Violet color */
+}
+
+section {
+    padding: 3em 2em;
+    background-color: rgba(0, 0, 0, 0.7);
+    margin: 2em auto;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    color: #f0f0f0; /* Lighter text color */
+}
+
+section h2 {
+    font-size: 2em;
+    color: #9b59b6; /* Violet color */
+    text-shadow: 0 0 2px #9b59b6, 0 0 4px #9b59b6; /* Adjusted text shadow */
+    border-bottom: 2px solid #9b59b6; /* Violet color */
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+}
+
+section p, section ul {
+    font-size: 1.1em;
+    line-height: 1.6em;
+}
+
+section ul {
+    list-style: none;
+    padding: 0;
+}
+
+section ul li {
+    margin: 0.5em 0;
+    padding-left: 1em;
+    position: relative;
+}
+
+section ul li:before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: #9b59b6; /* Violet color */
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    padding: 1em 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #f0f0f0; /* Lighter text color */
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.cert-popup {
+    position: absolute;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: none; /* Initially hidden */
+}
+
+.cert-popup img {
+    max-width: 100%; /* Ensure image does not exceed container */
+}
