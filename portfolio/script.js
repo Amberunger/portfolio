@@ -20,21 +20,3 @@ function toggleImage() {
         imagePopup.style.display = 'none';
     }
 }
-// Function to format the date in a readable format
-function formatDate(date) {
-    var day = date.getDate();
-    var month = date.getMonth() + 1;
-    var year = date.getFullYear();
-    return month + '/' + day + '/' + year;
-}
-
-// Function to set the last updated date in the footer
-function setLastUpdated() {
-    var lastUpdated = new Date(document.lastModified);
-    document.getElementById('last-updated').textContent = formatDate(lastUpdated);
-}
-
-// Call the function to set last updated date when the page is loaded
-window.onload = function() {
-    setLastUpdated();
-};
