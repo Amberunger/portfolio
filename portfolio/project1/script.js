@@ -1,50 +1,66 @@
 const dino = document.getElementById('dino');
 const obstacle = document.getElementById('obstacle');
 const tallObstacle = document.getElementById('tall-obstacle');
-const scoreDisplay = document.getElementById('score');
+const scoreDisplay = document.getElementById('score-display');
+const speedDisplay = document.getElementById('speed-display');
+const endScreen = document.getElementById('end-screen');
+const finalScore = document.getElementById('final-score');
+const restartButton = document.getElementById('restart-button');
+
 let isJumping = false;
 let score = 0;
 let gameRunning = true;
-let jumpCount = 0; // Counter to track jumps
-let jumpPosition = 0; // Track the current height of the jump
-let doubleJumpAllowed = true; // Flag to allow double jump
-let obstaclePassed = false; // Flag to track if obstacle has been passed
-let currentObstacle = ''; // Track which obstacle is currently visible
+let jumpCount = 0;
+let jumpPosition = 0;
+let doubleJumpAllowed = true;
+let obstaclePassed = false;
+let currentObstacle = '';
+let speed = 4; // Initial obstacle speed in seconds (slower start)
+let speedIncreaseAmount = 0.2; // Amount to increase speed by
+let speedIncreaseInterval = 10000; // 10 seconds interval to increase speed
+let canJump = true; // Flag to control whether jumping is allowed
 
 // Function to start the game and set a new random obstacle
 function startGame() {
-  // Hide both obstacles initially
   obstacle.style.display = 'none';
   tallObstacle.style.display = 'none';
-
-  // Randomly select an obstacle type
+  
   const obstacleType = Math.random() < 0.5 ? 'obstacle' : 'tall-obstacle';
   
-  // Show the selected obstacle
   currentObstacle = obstacleType;
   document.getElementById(obstacleType).style.display = 'block';
+  
+  // Reset the obstacle speed for the new game
+  obstacle.style.animationDuration = `${speed}s`;
+  tallObstacle.style.animationDuration = `${speed}s`;
+  speedDisplay.textContent = `Speed: ${speed.toFixed(1)}s`;
 }
 
 // Initialize the game with a random obstacle
 startGame();
 
 document.addEventListener('keydown', function(event) {
-  // Check for normal jump (lowercase 'w')
-  if (event.key === 'w' && !event.shiftKey && jumpCount === 0) {
-    jump(150); // Normal jump height
-  } 
-  // Check for double jump (Shift + lowercase 'w')
-  else if (event.key === 'W' && event.shiftKey && doubleJumpAllowed) {
-    jump(300); // Double jump height (2x normal)
+  if (!gameRunning) return; // Ignore inputs if the game is not running
+  
+  if (event.key === 'w' && !event.shiftKey && jumpCount === 0 && canJump) {
+    jump(); // Normal jump
+  } else if (event.key === 'W' && event.shiftKey && doubleJumpAllowed && canJump) {
+    jump(true); // Double jump
   }
 });
 
-function jump(jumpHeight) {
-  if (isJumping) return; // Prevent multiple jumps if already jumping
+function jump(isDoubleJump = false) {
+  if (isJumping) return;
   isJumping = true;
-  jumpCount++; // Increase jump count when jump is triggered
-  doubleJumpAllowed = false; // Disable double jump until the first jump is completed
+  jumpCount++;
+  doubleJumpAllowed = false;
+  canJump = false; // Disable further jumps until landing
 
+  // Adjust these values to balance the jump speed
+  const jumpSpeed = Math.max(27, 32 - speed * 2); // Balanced jump speed
+  const jumpIncrement = Math.max(7, 12 - speed); // Balanced jump increment
+
+  let jumpHeight = isDoubleJump ? 300 : 150;
   let upInterval = setInterval(() => {
     if (jumpPosition >= jumpHeight) {
       clearInterval(upInterval);
@@ -52,64 +68,109 @@ function jump(jumpHeight) {
       let downInterval = setInterval(() => {
         if (jumpPosition <= 0) {
           clearInterval(downInterval);
-          jumpPosition = 0; // Reset jump position when the dino hits the ground
-          jumpCount = 0; // Reset jump count when the dino hits the ground
-          doubleJumpAllowed = true; // Allow double jump after landing
+          jumpPosition = 0;
+          jumpCount = 0;
+          doubleJumpAllowed = true;
           isJumping = false;
+          canJump = true; // Re-enable jumping
+          dino.style.bottom = jumpPosition + 'px';
         } else {
-          jumpPosition -= 20;
+          jumpPosition -= jumpIncrement;
           dino.style.bottom = jumpPosition + 'px';
         }
-      }, 20);
+      }, jumpSpeed);
     } else {
-      jumpPosition += 20;
+      jumpPosition += jumpIncrement;
       dino.style.bottom = jumpPosition + 'px';
     }
-  }, 20);
+  }, jumpSpeed);
 }
 
-let checkCollision = setInterval(function () {
+function updateObstacleSpeed() {
+  if (speed > 1) {
+    speed -= speedIncreaseAmount;
+    obstacle.style.animationDuration = `${speed}s`;
+    tallObstacle.style.animationDuration = `${speed}s`;
+    speedDisplay.textContent = `Speed: ${speed.toFixed(1)}s`;
+  }
+}
+
+// Increase speed every 10 seconds
+setInterval(updateObstacleSpeed, speedIncreaseInterval);
+
+function showEndScreen() {
+  endScreen.classList.remove('hidden');
+  finalScore.textContent = `Final Score: ${score}`;
+  canJump = false; // Disable jumping on the end screen
+}
+
+function hideEndScreen() {
+  endScreen.classList.add('hidden');
+}
+
+// Restart the game when the restart button is clicked
+restartButton.addEventListener('click', () => {
+  hideEndScreen();
+  // Reset the game state
+  score = 0;
+  speed = 4;
+  scoreDisplay.textContent = `Score: ${score}`;
+  speedDisplay.textContent = `Speed: ${speed.toFixed(1)}s`;
+  startGame();
+  gameRunning = true;
+  canJump = true; // Re-enable jumping
+
+  // Restart collision and score checks
+  checkCollisionInterval = setInterval(checkCollision, 10);
+  scoreInterval = setInterval(() => {
+    if (gameRunning) {
+      score += 1;
+      scoreDisplay.textContent = `Score: ${score}`;
+    }
+  }, 1000);
+});
+
+function checkCollision() {
+  if (!gameRunning) return;
+
   let dinoRect = dino.getBoundingClientRect();
   let currentObstacleElement = document.getElementById(currentObstacle);
   let currentObstacleRect = currentObstacleElement.getBoundingClientRect();
 
-  // Check for collision with the current obstacle
   if (
     dinoRect.right > currentObstacleRect.left &&
     dinoRect.left < currentObstacleRect.right &&
     dinoRect.bottom > currentObstacleRect.top &&
     dinoRect.top < currentObstacleRect.bottom
   ) {
-    alert('Game Over!');
+    showEndScreen();
     currentObstacleElement.style.animation = 'none';
     gameRunning = false;
-    clearInterval(checkCollision); // Stop the game after collision
-    clearInterval(scoreInterval); // Stop the score increment
+    clearInterval(checkCollisionInterval);
+    clearInterval(scoreInterval);
   }
 
-  // Check if the current obstacle has passed the dino successfully
   if (currentObstacleRect.right < dinoRect.left && !obstaclePassed) {
     score += 1;
     scoreDisplay.textContent = `Score: ${score}`;
-    obstaclePassed = true; // Mark that the obstacle has been passed
-    startGame(); // Hide the passed obstacle and show a new random one
+    obstaclePassed = true;
+    startGame();
     
-    // Reset the obstaclePassed flag after 5 seconds
     setTimeout(() => {
       obstaclePassed = false;
-    }, 4000);
+    }, 2000);
   }
 
-  // Reset the flag once the obstacle leaves the screen (to the left)
   if (currentObstacleRect.right < 0 && obstaclePassed) {
-    obstaclePassed = false; // Ready for the next obstacle
+    obstaclePassed = false;
   }
-}, 10);
+}
 
-// Increment the score by 1 every second
+// Initialize intervals
+let checkCollisionInterval = setInterval(checkCollision, 10);
 let scoreInterval = setInterval(() => {
   if (gameRunning) {
     score += 1;
     scoreDisplay.textContent = `Score: ${score}`;
   }
-}, 1000); // Increment score every 1 second
+}, 1000);
