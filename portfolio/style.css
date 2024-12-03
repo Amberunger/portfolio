@@ -1,21 +1,19 @@
 /* Importing Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
 
 body {
-    font-family: 'Press Start 2P', sans-serif;
-    background: #ffd1dc; /* Pastel pink background */
-    color: #333; /* Dark text color for better readability */
+    font-family: 'Merriweather', serif;
+    background: #FFFACD url('https://images.unsplash.com/photo-1599681994742-b5b57e6e09c1') no-repeat center center fixed; /* Pastel Pink background */
+    background-size: cover;
+    color: #333;
     margin: 0;
     padding: 0;
-    background-image: url('https://images.unsplash.com/photo-1599681994742-b5b57e6e09c1');
-    background-size: cover;
-    background-attachment: fixed;
 }
 
 header {
-    background-color: rgba(255, 105, 180, 0.8); /* Bright pink background with transparency */
-    color: #ffffff; /* White text color */
-    padding: 2em 0;
+    background-color: #fcd685; /* Soft Lavender background */
+    color: #fff; /* Warm White text */
+    padding: 0.5em 0; /* Reduced padding */
     text-align: center;
     position: sticky;
     top: 0;
@@ -24,9 +22,8 @@ header {
 }
 
 header h1 {
-    font-size: 2.5em;
-    color: #ffffff; /* White color to stand out against pink background */
-    text-shadow: 0 0 5px #ff69b4, 0 0 10px #ff69b4, 0 0 15px #ff69b4; /* Adjusted text shadow for a fairy-like glow */
+    font-size: 1.5em; /* Reduced font size */
+    text-shadow: 0 0 5px #c0c0c0, 0 0 10px #c0c0c0, 0 0 15px #c0c0c0; /* Soft Silver text shadow */
 }
 
 header nav ul {
@@ -37,114 +34,56 @@ header nav ul {
 
 header nav ul li {
     display: inline;
-    margin: 0 20px;
+    margin: 0 5px; /* Reduced margin */
 }
 
 header nav ul li a {
-    color: #ffffff; /* White text color */
+    color: #fff; /* Warm White text */
     text-decoration: none;
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 0.9em; /* Reduced font size */
     transition: color 0.3s, transform 0.3s;
 }
 
 header nav ul li a:hover {
-    color: #ff69b4; /* Hot pink color */
-    transform: scale(1.1); /* Slightly enlarge on hover */
+    color: #e0f7fa; /* Icy Blue on hover */
+    transform: scale(1.1);
 }
 
-/* Define pastel colors for each section */
-section:nth-of-type(1) {
-    background-color: rgba(255, 182, 193, 0.8); /* Pastel red (Light pink) */
-    box-shadow: 0 0 15px rgba(255, 105, 97, 0.7); /* Neon red */
+/* Define colors for each section */
+section:nth-of-type(3n+1) {
+    background-color: rgba(213, 174, 231, 0.7); /* Baby Blue background */
+    border: 3px solid rgba(180, 136, 201, 0.7); /* Deep Sky Blue border */
+    box-shadow: 0 0 15px rgba(211, 211, 211, 0.7); /* Light Gray glow */
 }
 
-section:nth-of-type(2) {
-    background-color: rgba(255, 223, 186, 0.8); /* Pastel orange */
-    box-shadow: 0 0 15px rgba(255, 140, 0, 0.7); /* Neon orange */
+section:nth-of-type(3n+2) {
+    background-color: rgba(255, 209, 220, 0.8); /* Robin’s Egg Teal background */
+    border: 3px solid rgba(247, 167, 186, 0.7); /* Teal border */
+    box-shadow: 0 0 15px rgba(211, 211, 211, 0.7); /* Light Gray glow */
 }
 
-section:nth-of-type(3) {
-    background-color: rgba(255, 239, 186, 0.8); /* Pastel yellow */
-    box-shadow: 0 0 15px rgba(255, 223, 0, 0.7); /* Neon yellow */
-}
-
-section:nth-of-type(4) {
-    background-color: rgba(186, 255, 201, 0.8); /* Pastel green */
-    box-shadow: 0 0 15px rgba(0, 255, 127, 0.7); /* Neon green */
-}
-
-section:nth-of-type(5) {
-    background-color: rgba(186, 229, 255, 0.8); /* Pastel blue */
-    box-shadow: 0 0 15px rgba(30, 144, 255, 0.7); /* Neon blue */
-}
-
-section:nth-of-type(6) {
-    background-color: rgba(221, 186, 255, 0.8); /* Pastel purple */
-    box-shadow: 0 0 15px rgba(138, 43, 226, 0.7); /* Neon purple */
-}
-
-section:nth-of-type(7) {
-    background-color: rgba(255, 182, 255, 0.8); /* Pastel pink */
-    box-shadow: 0 0 15px rgba(255, 20, 147, 0.7); /* Neon pink */
+section:nth-of-type(3n) {
+    background-color: rgba(191, 239, 255, 0.8); /* Light Peach background */
+    border: 3px solid rgba(150, 187, 199, 0.7); /* Light Coral border */
+    box-shadow: 0 0 15px rgba(211, 211, 211, 0.7); /* Light Gray glow */
 }
 
 section {
-    padding: 3em 2em;
-    margin: 2em auto;
+    padding: 2em 1em; /* Reduced padding */
+    margin: 2em auto; /* Increased margin */
     max-width: 800px;
-    border-radius: 15px; /* More rounded corners for a softer look */
-    color: #333; /* Dark text color */
+    border-radius: 15px;
+    color: #333;
 }
 
 section h2 {
-    font-size: 2.5em; /* Larger font size */
-    font-weight: bold; /* Bolder text */
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 12px rgba(255, 255, 255, 0.8); /* Brighter glow */
-    border-bottom: 3px solid rgba(255, 255, 255, 0.8); /* Brighter border */
+    font-size: 2em; /* Reduced font size */
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 12px rgba(255, 255, 255, 0.8); /* Warm White text shadow */
+    border-bottom: 3px solid rgba(255, 255, 255, 0.8); /* Warm White border */
     padding-bottom: 0.5em;
     margin-bottom: 1em;
-}
-
-/* Matching section colors for titles */
-section:nth-of-type(1) h2 {
-    color: #ff0000; /* Bright red */
-    border-bottom-color: #ff0000;
-}
-
-section:nth-of-type(2) h2 {
-    color: #ffa500; /* Bright orange */
-    border-bottom-color: #ffa500;
-}
-
-section:nth-of-type(3) h2 {
-    color: #e6ac00; /* Darker yellow */
-    border-bottom-color: #e6ac00;
-}
-
-section:nth-of-type(4) h2 {
-    color: #00ff00; /* Bright green */
-    border-bottom-color: #00ff00;
-}
-
-section:nth-of-type(5) h2 {
-    color: #0000ff; /* Bright blue */
-    border-bottom-color: #0000ff;
-}
-
-section:nth-of-type(6) h2 {
-    color: #800080; /* Bright purple */
-    border-bottom-color: #800080;
-}
-
-section:nth-of-type(7) h2 {
-    color: #ff00ff; /* Bright pink */
-    border-bottom-color: #ff00ff;
-}
-
-section p, section ul {
-    font-size: 1.1em;
-    line-height: 1.6em;
 }
 
 section ul {
@@ -163,98 +102,25 @@ section ul li:before {
     position: absolute;
     left: 0;
     font-weight: bold;
-}
-
-/* Matching section colors for tiles */
-section:nth-of-type(1) ul li:before {
-    color: #ff0000; /* Bright red */
-}
-
-section:nth-of-type(2) ul li:before {
-    color: #ffa500; /* Bright orange */
-}
-
-section:nth-of-type(3) ul li:before {
-    color: #e6ac00; /* Darker yellow */
-}
-
-section:nth-of-type(4) ul li:before {
-    color: #00ff00; /* Bright green */
-}
-
-section:nth-of-type(5) ul li:before {
-    color: #0000ff; /* Bright blue */
-}
-
-section:nth-of-type(6) ul li:before {
-    color: #800080; /* Bright purple */
-}
-
-section:nth-of-type(7) ul li:before {
-    color: #ff00ff; /* Bright pink */
+    color: #e0f7fa; /* Icy Blue list item markers */
 }
 
 .cert-popup {
     position: absolute;
-    background-color: #ffffff; /* White background */
+    background-color: #fff; /* Warm White background */
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: none; /* Initially hidden */
-    border-radius: 15px; /* Rounded corners for a modern look */
+    display: none;
+    border-radius: 15px;
 }
 
 .cert-popup img {
-    max-width: 100%; /* Ensure image does not exceed container */
+    max-width: 100%;
 }
 
-/* Enhancements for better UX */
-header nav ul li a {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.2em;
-    transition: color 0.3s, transform 0.3s; /* Smooth transition */
-}
-
-header nav ul li a:hover {
-    color: #ff69b4;
-    transform: scale(1.1); /* Slightly enlarge on hover */
-}
-
-/* Fairy-like Animations */
-body {
-    animation: backgroundAnimation 10s infinite alternate;
-}
-
-@keyframes backgroundAnimation {
-    0% { background-color: #ffd1dc; }
-    50% { background-color: #ffe4e1; }
-    100% { background-color: #ffd1dc; }
-}
-
-header {
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-/* Responsive Design */
 @media (max-width: 768px) {
     header nav ul li {
         display: block;
         margin: 10px 0;
-    }
-    
-    section {
-        padding: 2em 1em;
-        max-width: 90%;
-    }
-    
-    section h2 {
-        font-size: 1.5em;
     }
 }
