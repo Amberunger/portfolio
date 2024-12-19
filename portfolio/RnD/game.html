@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jump & Duck Game</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+        }
+
+        .controls button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .controls button:hover {
+            background-color: #45a049;
+        }
+
+        .game-container {
+            position: relative;
+            width: 1000px;
+            height: 600px;
+            overflow: hidden;
+            background-color: #87CEEB;
+            display: flex;
+            align-items: flex-end;
+            border: 1px solid #000;
+        }
+
+        .character {
+            width: 50px;
+            height: 50px;
+            background-color: #ff6347;
+            position: absolute;
+            bottom: 20px;
+            left: 100px;
+            transition: transform 0.1s;
+        }
+
+        .obstacle {
+            width: 50px;
+            height: 50px;
+            background-color: #2e8b57;
+            position: absolute;
+            bottom: 20px;
+            right: 0;
+        }
+
+        .obstacle-duck {
+            width: 50px;
+            height: 100px;
+            background-color: #8b0000;
+            position: absolute;
+            bottom: 50px;
+            right: 0;
+        }
+
+        .ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 20px;
+            background-color: #654321;
+        }
+
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            color: red;
+            display: none;
+        }
+
+        .score {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="controls">
+        <button id="refresh-button">Refresh</button>
+        <button id="back-button"> <a href="../index.html">Back</a></button>
+    </div>
+    <div class="game-container">
+        <div class="character" id="character"></div>
+        <div class="obstacle" id="obstacle"></div>
+        <div class="obstacle-duck" id="obstacle-duck"></div>
+        <div class="ground"></div>
+        <div class="game-over" id="game-over">Game Over</div>
+        <div class="score" id="score">Score: 0</div>
+    </div>
+
+    <script>
+        let isJumping = false;
+        let isDucking = false;
+        let characterPosition = 100;
+        let gameRunning = true;
+        let score = 0;
+        let jumpKeyPressed = false;
+        let duckKeyPressed = false;
+
+        // Update score display
+        function updateScore() {
+            document.getElementById('score').innerText = `Score: ${score}`;
+        }
+
+        // Jump mechanic
+        function jump() {
+            if (isJumping || isDucking || !gameRunning) return;
+            isJumping = true;
+            const character = document.getElementById('character');
+            character.style.transform = 'translateY(-100px)';
+            setTimeout(() => {
+                character.style.transform = 'translateY(0)';
+                isJumping = false;
+            }, 500);
+        }
+
+        // Duck mechanic
+        function duck() {
+            if (isJumping || isDucking || !gameRunning) return;
+            isDucking = true;
+            const character = document.getElementById('character');
+            character.style.transform = 'translateY(25px) scaleY(0.5)';
+            setTimeout(() => {
+                character.style.transform = 'translateY(0) scaleY(1)';
+                isDucking = false;
+            }, 500);
+        }
+
+        // Move obstacles
+        function moveObstacles() {
+            const obstacle = document.getElementById('obstacle');
+            const obstacleDuck = document.getElementById('obstacle-duck');
+            let position = 0;
+            let positionDuck = 0;
+            let movingObstacle = Math.random() < 0.5 ? 'obstacle' : 'obstacleDuck';
+
+            function move() {
+                if (!gameRunning) return;
+
+                if (movingObstacle === 'obstacle') {
+                    position += 8; // Adjust speed as needed
+                    obstacle.style.right = position + 'px';
+                    obstacle.style.visibility = 'visible';
+                    obstacleDuck.style.visibility = 'hidden'; // Make obstacleDuck invisible
+                } else {
+                    positionDuck += 8; // Adjust speed as needed
+                    obstacleDuck.style.right = positionDuck + 'px';
+                    obstacleDuck.style.visibility = 'visible';
+                    obstacle.style.visibility = 'hidden'; // Make obstacle invisible
+                }
+
+                if (position > window.innerWidth) {
+                    position = 0;
+                    score++;
+                    updateScore();
+                    let newMovingObstacle = Math.random() < 0.5 ? 'obstacle' : 'obstacleDuck';
+                    if (newMovingObstacle !== movingObstacle) {
+                        movingObstacle = newMovingObstacle;
+                    }
+                }
+
+                if (positionDuck > window.innerWidth) {
+                    positionDuck = 0;
+                    score++;
+                    updateScore();
+                    let newMovingObstacle = Math.random() < 0.5 ? 'obstacle' : 'obstacleDuck';
+                    if (newMovingObstacle !== movingObstacle) {
+                        movingObstacle = newMovingObstacle;
+                    }
+                }
+
+                checkCollision();
+                requestAnimationFrame(move);
+            }
+
+            move();
+        }
+
+        // Collision detection
+        function checkCollision() {
+            const character = document.getElementById('character');
+            const obstacle = document.getElementById('obstacle');
+            const obstacleDuck = document.getElementById('obstacle-duck');
+
+            const characterRect = character.getBoundingClientRect();
+            const obstacleRect = obstacle.getBoundingClientRect();
+            const obstacleDuckRect = obstacleDuck.getBoundingClientRect();
+
+            if (
+                characterRect.left < obstacleRect.right &&
+                characterRect.right > obstacleRect.left &&
+                characterRect.top < obstacleRect.bottom &&
+                characterRect.bottom > obstacleRect.top
+            ) {
+                // Collision with obstacle
+                endGame();
+            }
+
+            if (
+                characterRect.left < obstacleDuckRect.right &&
+                characterRect.right > obstacleDuckRect.left &&
+                characterRect.top < obstacleDuckRect.bottom &&
+                characterRect.bottom > obstacleDuckRect.top
+            ) {
+                // Collision with obstacleDuck
+                endGame();
+            }
+        }
+
+        // End game
+        function endGame() {
+            gameRunning = false;
+            document.getElementById('game-over').style.display = 'block';
+        }
+
+        // Start moving the obstacles
+        moveObstacles();
+
+        // Event listeners for jump and duck
+        document.addEventListener('keydown', (event) => {
+            if (!gameRunning) return;
+
+            if (event.code === 'KeyW' && !jumpKeyPressed) {
+                jumpKeyPressed = true;
+                jump();
+            } else if (event.code === 'KeyS' && !duckKeyPressed) {
+                duckKeyPressed = true;
+                duck();
+            }
+        });
+
+        document.addEventListener('keyup', (event) => {
+            if (event.code === 'KeyW') {
+                jumpKeyPressed = false;
+            } else if (event.code === 'KeyS') {
+                duckKeyPressed = false;
+            }
+        });
+
+        // Event listeners for refresh and back buttons
+        document.getElementById('refresh-button').addEventListener('click', () => {
+            location.reload();
+        });
+
+        document.getElementById('back-button').addEventListener('click', () => {
+            history.back();
+        });
+    </script>
+</body>
+
+</html>

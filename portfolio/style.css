@@ -3,7 +3,7 @@
 
 body {
     font-family: 'Merriweather', serif;
-    background: #FFFACD url('https://images.unsplash.com/photo-1599681994742-b5b57e6e09c1') no-repeat center center fixed; /* Pastel Pink background */
+    background: #FFFACD url('https://images.unsplash.com/photo-1599681994742-b5b57e6e09c1') no-repeat center center fixed; /* Lemon Chiffon background */
     background-size: cover;
     color: #333;
     margin: 0;
@@ -11,8 +11,8 @@ body {
 }
 
 header {
-    background-color: #fcd685; /* Soft Lavender background */
-    color: #fff; /* Warm White text */
+    background-color: #fcd685; /* Deep Peach background */
+    color: #fff; /* White text */
     padding: 0.5em 0; /* Reduced padding */
     text-align: center;
     position: sticky;
@@ -23,7 +23,7 @@ header {
 
 header h1 {
     font-size: 1.5em; /* Reduced font size */
-    text-shadow: 0 0 5px #c0c0c0, 0 0 10px #c0c0c0, 0 0 15px #c0c0c0; /* Soft Silver text shadow */
+    text-shadow: 0 0 5px #c0c0c0, 0 0 10px #c0c0c0, 0 0 15px #c0c0c0; /* Silver text shadow */
 }
 
 header nav ul {
@@ -38,35 +38,36 @@ header nav ul li {
 }
 
 header nav ul li a {
-    color: #fff; /* Warm White text */
+    color: #fff; /* White text */
     text-decoration: none;
     font-weight: bold;
     font-size: 0.9em; /* Reduced font size */
     transition: color 0.3s, transform 0.3s;
 }
 
+
 header nav ul li a:hover {
-    color: #e0f7fa; /* Icy Blue on hover */
+    color: #919596; 
     transform: scale(1.1);
 }
 
 /* Define colors for each section */
 section:nth-of-type(3n+1) {
-    background-color: rgba(213, 174, 231, 0.7); /* Baby Blue background */
-    border: 3px solid rgba(180, 136, 201, 0.7); /* Deep Sky Blue border */
-    box-shadow: 0 0 15px rgba(211, 211, 211, 0.7); /* Light Gray glow */
+    background-color: rgba(248, 190, 103, 0.7); 
+    border: 3px solid rgba(202, 138, 42, 0.7); 
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.7); 
 }
 
 section:nth-of-type(3n+2) {
-    background-color: rgba(255, 209, 220, 0.8); /* Robin’s Egg Teal background */
-    border: 3px solid rgba(247, 167, 186, 0.7); /* Teal border */
-    box-shadow: 0 0 15px rgba(211, 211, 211, 0.7); /* Light Gray glow */
+    background-color: rgba(255, 209, 220, 0.8); 
+    border: 3px solid rgba(247, 167, 186, 0.7); 
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
 }
 
 section:nth-of-type(3n) {
-    background-color: rgba(191, 239, 255, 0.8); /* Light Peach background */
-    border: 3px solid rgba(150, 187, 199, 0.7); /* Light Coral border */
-    box-shadow: 0 0 15px rgba(211, 211, 211, 0.7); /* Light Gray glow */
+    background-color: rgba(243, 154, 143, 0.8); 
+    border: 3px solid rgba(204, 80, 63, 0.7); 
+    box-shadow: 0 0 15px rgba(211, 211, 211, 0.7); 
 }
 
 section {
